@@ -1,103 +1,145 @@
-import Image from "next/image";
+"use client"
+
+import { AnimatePresence, motion } from 'framer-motion';
+import { X } from "lucide-react"
+import { MusicPlayer } from "@/components/music-player"
+import { ManifestoModal } from "@/components/manifesto-modal"
+import { useState } from "react"
+// Button is no longer needed
+// import { Button } from "@/components/ui/button"
+import { StarryBackground } from "@/components/starry-background"
+// ContactForm is no longer needed
+// import { ContactForm } from "@/components/contact-form"
+import { Constellation } from "@/components/constellation"
+// Mail icon is no longer needed
+// import { Mail } from "lucide-react"
+import { BentoGridModal, Project } from "@/components/bento-grid-modal"
+// Import the new SocialLinks component
+import { SocialLinks } from "@/components/social-links"
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  // State for ContactForm is removed
+  // const [showContactForm, setShowContactForm] = useState(false)
+  const [showManifesto, setShowManifesto] = useState(false)
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [persistedCardName, setPersistedCardName] = useState<string | null>(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const handleStarClick = (project: Project) => {
+    setSelectedProject(project);
+  };
+
+  const handleCloseModal = () => {
+    if (selectedProject) {
+      setPersistedCardName(selectedProject.name);
+      setSelectedProject(null);
+    }
+  };
+
+  const isUIActive = !!selectedProject || showManifesto;
+
+  return (
+    <main className="relative h-screen overflow-hidden">
+      <StarryBackground />
+
+      <div className="relative z-10 h-full flex flex-col">
+  
+        <header 
+          className="relative z-50 px-8 text-center transition-all duration-500" 
+          style={{ paddingTop: showManifesto ? '8vh' : '28vh' }}
+        >
+          <div className="flex flex-col items-center relative">
+            <p 
+              className="text-xs font-semibold tracking-widest text-white/80 absolute"
+              style={{ 
+                fontFamily: 'var(--font-open-sans)',
+                left: '40.8%',
+                transform: 'translateX(-50%)',
+                top: '0px'
+              }}
+            >
+              KEEDA&apos;S
+            </p>
+            <h1 
+              className="text-9xl tracking-wider" 
+              style={{ 
+                fontFamily: "'Dream Avenue', serif",
+                background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.9) 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                textShadow: '0 0 40px rgba(255, 255, 255, 0.3)',
+                filter: 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.2))'
+              }}
+            >
+              idea-isms
+            </h1>
+          </div>
+          
+          <motion.button 
+            onClick={() => setShowManifesto(!showManifesto)}
+            aria-label={showManifesto ? "Close manifesto" : "Open manifesto"}
+            aria-expanded={showManifesto}
+            layout
+            transition={{ type: "spring", stiffness: 260, damping: 24 }}
+            className={`relative mt-8 inline-flex h-10 items-center justify-center overflow-hidden rounded-full border text-sm text-gray-200 transition-colors duration-300 ${
+              showManifesto
+                ? "w-34 border-white/45 bg-white/15 shadow-[0_0_24px_rgba(255,255,255,0.18)]"
+                : "w-28 border-white/30 hover:bg-white/10"
+            }`}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <motion.span
+              animate={{ x: showManifesto ? -10 : 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 26 }}
+            >
+              Manifesto
+            </motion.span>
+            <motion.span
+              aria-hidden="true"
+              className="absolute right-3.5 flex h-5 w-5 items-center justify-center rounded-full border border-white/35 bg-white/15"
+              initial={false}
+              animate={{
+                opacity: showManifesto ? 1 : 0,
+                x: showManifesto ? 0 : -14,
+                scale: showManifesto ? 1 : 0.75,
+              }}
+              transition={{ type: "spring", stiffness: 320, damping: 24 }}
+            >
+              <X className="h-3.5 w-3.5" />
+            </motion.span>
+          </motion.button>
+        </header>
+
+        <ManifestoModal isOpen={showManifesto} />
+
+        <section className={`relative flex-1 transition-opacity duration-500 ${showManifesto ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+          <Constellation 
+            onStarClick={handleStarClick} 
+            isUIActive={isUIActive}
+            activeProject={selectedProject}
+            persistedCardName={persistedCardName}
+          />
+        </section>
+
+        {/* The Get in Touch button is replaced with the new SocialLinks component */}
+        <div className={`flex justify-center pb-8 transition-opacity duration-500 ${showManifesto ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+          <SocialLinks />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+      </div>
+
+      {/* The ContactForm is removed from here */}
+      <MusicPlayer />
+
+      <AnimatePresence
+        onExitComplete={() => setPersistedCardName(null)}
+      >
+        {selectedProject && (
+          <BentoGridModal 
+            key={selectedProject.name} 
+            project={selectedProject} 
+            onClose={handleCloseModal} 
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+        )}
+      </AnimatePresence>
+    </main>
+  )
 }
