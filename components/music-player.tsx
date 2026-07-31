@@ -1,27 +1,37 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { Play, Pause, SkipForward, Volume2, VolumeX } from "lucide-react"
+import { Music, VolumeX } from "lucide-react"
 
 const tracks = [
+  {
+    title: "Return to your Center (1 hour handpan music)",
+    artist: "Malte Marten",
+    file: "/music/Return to your Center (1 hour handpan music)  Malte Marten.mp3",
+  },
   { title: "Surrenderism", artist: "Jon Kennedy", file: "/music/Jon Kennedy- Surrenderism.mp3" },
-  { title: "Highness (Superlover Remix)", artist: "Tube & Berger, In.deed", file: "/music/Tube & Berger, In.deed - Highness (Superlover Remix).mp3" }
+  { title: "Highness (Superlover Remix)", artist: "Tube & Berger, In.deed", file: "/music/Tube & Berger, In.deed - Highness (Superlover Remix).mp3" },
 ]
 
 export function MusicPlayer() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTrack, setCurrentTrack] = useState(0)
-  const [isMuted, setIsMuted] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
 
   const togglePlay = () => {
-    if (audioRef.current) {
+    const audio = audioRef.current
+
+    if (audio) {
       if (isPlaying) {
-        audioRef.current.pause()
+        audio.pause()
+        setIsPlaying(false)
       } else {
-        audioRef.current.play()
+        audio.play().then(() => {
+          setIsPlaying(true)
+        }).catch(() => {
+          setIsPlaying(false)
+        })
       }
-      setIsPlaying(!isPlaying)
     }
   }
 
@@ -30,54 +40,31 @@ export function MusicPlayer() {
     setIsPlaying(false)
   }
 
-  const toggleMute = () => {
-    if (audioRef.current) {
-      audioRef.current.muted = !isMuted
-      setIsMuted(!isMuted)
-    }
-  }
-
   useEffect(() => {
     if (audioRef.current && isPlaying) {
-      audioRef.current.play()
+      audioRef.current.play().catch(() => {
+        setIsPlaying(false)
+      })
     }
-  }, [currentTrack])
+  }, [currentTrack, isPlaying])
 
   return (
-    <div className="fixed bottom-8 right-8 z-50 bg-black/60 backdrop-blur-md rounded-full px-6 py-4 border border-white/20 shadow-lg">
+    <div className="fixed bottom-8 right-[clamp(1.5rem,8vw,5rem)] z-50">
       <audio
         ref={audioRef}
         src={tracks[currentTrack].file}
         onEnded={nextTrack}
       />
-      
-      <div className="flex items-center gap-4">
-        <div className="text-right mr-2">
-          <p className="text-white text-xs font-medium">{tracks[currentTrack].title}</p>
-          <p className="text-gray-400 text-xs">{tracks[currentTrack].artist}</p>
-        </div>
-        
-        <button
-          onClick={togglePlay}
-          className="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
-        >
-          {isPlaying ? <Pause size={20} className="text-white" /> : <Play size={20} className="text-white" />}
-        </button>
-        
-        <button
-          onClick={nextTrack}
-          className="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
-        >
-          <SkipForward size={20} className="text-white" />
-        </button>
-        
-        <button
-          onClick={toggleMute}
-          className="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
-        >
-          {isMuted ? <VolumeX size={20} className="text-white" /> : <Volume2 size={20} className="text-white" />}
-        </button>
-      </div>
+
+      <button
+        type="button"
+        onClick={togglePlay}
+        aria-label={isPlaying ? "Turn music off" : "Turn music on"}
+        title={isPlaying ? "Music off" : "Music on"}
+        className="grid size-6 place-items-center bg-transparent p-0 text-[rgba(205,222,255,0.74)] transition-all duration-300 hover:scale-110 hover:text-[rgba(244,249,255,0.92)] hover:[filter:drop-shadow(0_0_10px_rgba(190,220,255,0.36))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(244,249,255,0.55)]"
+      >
+        {isPlaying ? <Music size={18} /> : <VolumeX size={18} />}
+      </button>
     </div>
   )
 }

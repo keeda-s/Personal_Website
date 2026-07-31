@@ -39,3 +39,34 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local design and generation sources
+/assets/source/
+/design-qa*.png
+/design-qa.md
+/app/claude.md
+/public/backgroundpicture/
+
+# packaged/archive source files; the runtime font remains versioned
+/public/font/*
+!/public/font/Dream-Avenue.ttf
+
+# only publish the hero assets used by the current scene
+/public/hero-layers/*
+!/public/hero-layers/Lake expanded.png
+!/public/hero-layers/Left Mountain Close.png
+!/public/hero-layers/Left Mountain Far.png
+!/public/hero-layers/Right Mountain Close.png
+!/public/hero-layers/Right Mountain Far.png
+!/public/hero-layers/Righthand Bank w human.png
+!/public/hero-layers/lefthand bank.png
+!/public/hero-layers/foreground.png
+!/public/hero-layers/animation/
+/public/hero-layers/animation/*
+!/public/hero-layers/animation/skeleton_website.riv
+
+# only publish tracks currently exposed by the player
+/public/music/*
+!/public/music/Jon Kennedy- Surrenderism.mp3
+!/public/music/Return to your Center (1 hour handpan music)  Malte Marten.mp3
+!/public/music/Tube & Berger, In.deed - Highness (Superlover Remix).mp3

@@ -1,0 +1,283 @@
+/* Stars, Milky Way, flow fields, anomalies, and live sky event controls. */
+.hero-frame {
+  --star-count: 800;
+  --star-seed: 1000;
+  --star-sky-height: 1;
+  --star-min-size: 0.3;
+  --star-max-size: 1.5;
+  --star-min-alpha: 0.2;
+  --star-max-alpha: 1.5;
+  --star-bright-chance: 0.08;
+  --star-field-opacity: 1;
+  --star-field-glow: 1.8px;
+  --star-twinkle-duration: 5s;
+  --star-twinkle-min-opacity: 0.5;
+  --star-twinkle-max-opacity: 1;
+
+  /* Volumetric Milky Way: shared position and geometry. */
+  --milky-dust-seed: 711;
+  --milky-dust-center-x: 0.36111;
+  --milky-dust-center-y: 0.34;
+  --milky-dust-rotation: 70;
+  --milky-dust-length: 1.9;
+  --milky-dust-width: 0.48;
+  --milky-dust-opacity: 0.42;
+  --milky-dust-blur: 0px;
+  --milky-dust-x: 0%;
+  --milky-dust-y: 0%;
+  --milky-dust-scale: 1;
+  --milky-canvas-overscan-x: 0.09;
+  --milky-canvas-overscan-y: 0.11;
+
+  /* Cloud body: low-resolution noise is enlarged into soft volume. */
+  --milky-field-resolution: 0.14;
+  --milky-noise-detail: 4.8;
+  --milky-noise-warp: 1.68;
+  --milky-cloud-contrast: 1.8;
+  --milky-cloud-taper: 0.18;
+  --milky-cloud-clump-scale: .311;
+  --milky-light-opacity: 1.42;
+  --milky-outer-haze-opacity: .34;
+  --milky-shadow-opacity: .81;
+  --milky-shadow-depth: 1.22;
+  --milky-shadow-fine-detail: 3.4;
+  --milky-shadow-fine-opacity: 0.65;
+  --milky-shadow-star-occlusion: 4.2;
+  --milky-rim-width: 2;
+  --milky-rim-intensity: 1.18;
+
+  /* Slow cloud evolution. New static fields crossfade; no per-frame canvas redraw. */
+  --milky-evolution-enabled: 1;
+  --milky-evolution-min-duration: 9s;
+  --milky-evolution-max-duration: 18s;
+  --milky-evolution-crossfade-duration: 7s;
+  --milky-evolution-warp-min: 1.15;
+  --milky-evolution-warp-max: 2.2;
+  --milky-evolution-warp-step: 0.07;
+  --milky-evolution-contrast-min: 1.2;
+  --milky-evolution-contrast-max: 4.6;
+  --milky-evolution-contrast-step: 0.12;
+  /* Directional advance applied whenever the cloud volume evolves. */
+  --milky-evolution-rise-step: 0.035;
+
+  /* Cloud light palette. Rose is intentionally restrained. */
+  --milky-cyan-strength: .2;
+  --milky-violet-strength: 1.081;
+  --milky-rose-strength: .62;
+
+  /* One continuous outer star band, independent from cloud crossfades. */
+  --milky-outer-star-count: 4000;
+  --milky-outer-star-min-size: 0.24;
+  --milky-outer-star-max-size: 0.82;
+  --milky-outer-star-alpha: 1.52;
+  --milky-outer-star-spread: 1;
+  --milky-outer-star-core-gap: 0.28;
+  --milky-star-twinkle-duration: 3s;
+  --milky-star-twinkle-min: 0.9;
+  --milky-star-twinkle-max: 2;
+  --milky-star-twinkle-glow: 2.4px;
+  --milky-star-render-dpr: .9;
+  --milky-star-rise-duration: 10s;
+
+  /* Each generated bank rises once, then resets only after it is invisible. */
+  --milky-cloud-rise-x: -0.4%;
+  --milky-cloud-rise-y: -5.8%;
+  --milky-star-rise-y: -7.2%;
+
+  /* Uneven luminous knots embedded in dense cloud regions. */
+  --milky-knot-count: 16;
+  --milky-knot-min-size: 22;
+  --milky-knot-max-size: 84;
+  --milky-knot-intensity: 4.72;
+  --milky-knot-spread: .58;
+  --milky-knot-core-brightness: .72;
+
+  /* Cloud speed is controlled above by evolution min/max duration and rise step. */
+
+  /* Cloud noise is already enlarged softly; 1 avoids oversized GPU textures. */
+  --milky-render-dpr: 1;
+  --milky-detail-scale: 1;
+
+  --flow-seed: 907;
+  --flow-count: 2600;
+  --flow-center-x: 0.62;
+  --flow-center-y: 0.42;
+  --flow-radius: 0.02;
+  --flow-pull: 8;
+  --flow-curl: 3;
+  --flow-length: 1.4;
+  --flow-width: 0.42;
+  --flow-alpha: 0.18;
+  --flow-dark-alpha: 0.02;
+  --flow-opacity: 0.68;
+  --flow-blur: 0.35px;
+  --flow-pulse-duration: 4s;
+  --flow-swirl-speed: 0.06;
+  --flow-swirl-strength: 0.05;
+  --flow-phase-drift: 0.1;
+  --flow-spiral-arms: 1;
+  --flow-spiral-wobble: 0;
+  --flow-inner-radius: 0;
+  --flow-rotation-speed: 0.4;
+  --flow-drift-duration: 38;
+  --flow-redraw-fps: 20;
+  --flow-render-dpr: 1;
+  /* Moon avoidance: each complete flow slides sideways before it is drawn. */
+  --flow-moon-repel-radius: 30px;
+  --flow-moon-repel-strength: 0.92;
+
+  /* Rising loops: flows 1, 2, 4 and 5 re-enter behind the horizon. */
+  --flow-rise-top-y: -0.12;
+  --flow-rise-horizon-y: 0.84;
+  --flow-rise-fade: 0.08;
+  --flow-1-rise-enabled: 1;
+  --flow-1-rise-duration: 104;
+  --flow-2-rise-enabled: 1;
+  --flow-2-rise-duration: 126;
+  --flow-3-rise-enabled: 0;
+  --flow-3-rise-duration: 1;
+  --flow-4-rise-enabled: 1;
+  --flow-4-rise-duration: 116;
+  --flow-5-rise-enabled: 1;
+  --flow-5-rise-duration: 138;
+
+  /* Cosmic events: timings are seconds unless a CSS unit is shown. */
+  --cosmic-events-enabled: 1;
+  --cosmic-event-first-delay: 4;
+  --cosmic-event-min-delay: 35;
+  --cosmic-event-max-delay: 75;
+  /* Keep these two duration values matched so events cross the full sky. */
+  --cosmic-event-duration: 42;
+  --cosmic-event-travel-duration: 42s;
+  --cosmic-event-size: 50px;
+  --cosmic-event-hit-size: 88px;
+  --cosmic-event-scale: 1;
+  --cosmic-event-opacity: 0.82;
+  --cosmic-event-glow: 16px;
+  --cosmic-event-panel-width: 252px;
+  --cosmic-event-panel-opacity: 0.96;
+
+  /* Distant dark-universe object. It is self-contained and never filters the moon. */
+  --dark-mystery-x: 73%;
+  --dark-mystery-y: 31%;
+  --dark-mystery-size: 42px;
+  --dark-mystery-opacity: 0.72;
+  --dark-mystery-drift-duration: 34s;
+
+  /* The current month chooses the constellation; these controls place it. */
+  --seasonal-constellation-x: 8%;
+  --seasonal-constellation-y: 12%;
+  --seasonal-constellation-width: 18%;
+  --seasonal-constellation-opacity: 0.42;
+  --seasonal-constellation-beam-duration: 14s;
+
+  /* Occasional live sky traffic. Durations are seconds. */
+  --satellite-first-delay: 22;
+  --satellite-repeat-delay: 150;
+  --satellite-crossing-duration: 28s;
+  --rocket-first-delay: 12;
+  --rocket-rising-duration: 24s;
+
+  --flow-1-x: 0.9;
+  --flow-1-y: 0.6;
+  --flow-1-radius: 0.04;
+  --flow-1-opacity: 0.81;
+  --flow-1-density: 1;
+  --flow-1-length: 1.8;
+  --flow-1-rotation-speed: -0.2;
+  --flow-1-drift-x: 0.02;
+  --flow-1-drift-y: 0.1;
+  --flow-1-ring-mode: 0;
+
+  --flow-2-x: 0.19;
+  --flow-2-y: 0.24;
+  --flow-2-radius: 0.035;
+  --flow-2-opacity: .56;
+  --flow-2-density: 0.42;
+  --flow-2-length: 1.4;
+  --flow-2-rotation-speed: -0.3;
+  --flow-2-drift-x: 0;
+  --flow-2-drift-y: 0.06;
+  --flow-2-ring-mode: 0;
+
+  --flow-3-x: 0.62;
+  --flow-3-y: 0.36;
+  --flow-3-radius: 0.3;
+  --flow-3-opacity: .34;
+  --flow-3-density: 0.72;
+  --flow-3-length: 75;
+  --flow-3-rotation-speed: 0.02;
+  --flow-3-drift-x: -0.006;
+  --flow-3-drift-y: -0.018;
+  --flow-3-ring-mode: 0;
+
+  --flow-4-x: 0.78;
+  --flow-4-y: 0.23;
+  --flow-4-radius: 0.03;
+  --flow-4-opacity: .74;
+  --flow-4-density: 0.38;
+  --flow-4-length: 1.4;
+  --flow-4-rotation-speed: 0.18;
+  --flow-4-drift-x: -0.006;
+  --flow-4-drift-y: -0.01;
+  --flow-4-ring-mode: 0;
+
+  --flow-5-x: 0.4;
+  --flow-5-y: 0.1;
+  --flow-5-radius: 0.026;
+  --flow-5-opacity: 2.28;
+  --flow-5-density: 0.34;
+  --flow-5-length: 1.1;
+  --flow-5-rotation-speed: -0.2;
+  --flow-5-drift-x: 0.005;
+  --flow-5-drift-y: -0.1;
+  --flow-5-ring-mode: 0;
+
+  --vangogh-flow-seed: 411;
+  --vangogh-flow-count: 90;
+  --vangogh-flow-x: 0.38;
+  --vangogh-flow-y: 0.34;
+  --vangogh-flow-width: 1.2;
+  --vangogh-flow-height: 0.5;
+  --vangogh-flow-opacity: 0; /* changed this to include effect */
+  --vangogh-flow-line-length: 1;
+  --vangogh-flow-line-width: 1.55;
+  --vangogh-flow-spacing: 1;
+  --vangogh-flow-wave-height: 0.09;
+  --vangogh-flow-wave-length: 0.34;
+  --vangogh-flow-speed: 0.008;
+  --vangogh-flow-drift-x: -0.01;
+  --vangogh-flow-drift-y: -0.018;
+  --vangogh-flow-drift-duration: 8;
+  --vangogh-flow-rotation: 4;
+  --vangogh-flow-blur: 0.2px;
+  --shooting-star-opacity: 0.79;
+  --shooting-star-duration: 10s;
+  --anomaly-opacity: 0;
+  --anomaly-x: 44%;
+  --anomaly-y: 31%;
+  --anomaly-size: 130px;
+  --anomaly-start-scale: 0.72;
+  --anomaly-end-scale: 1.55;
+  --anomaly-start-rotate: -8deg;
+  --anomaly-end-rotate: 42deg;
+  --anomaly-brightness-start: 1.22;
+  --anomaly-brightness-end: 1.85;
+  --anomaly-contrast-start: 1.08;
+  --anomaly-contrast-end: 1.45;
+  --anomaly-blur-start: 0px;
+  --anomaly-blur-end: 1.4px;
+  --anomaly-hue-start: 25deg;
+  --anomaly-hue-end: 135deg;
+  --anomaly-border-opacity: 0.2;
+  --anomaly-duration: 18s;
+}
+
+@media (max-width: 820px) {
+  .hero-frame {
+    --milky-render-dpr: 1;
+    --milky-detail-scale: 0.4;
+    --milky-field-resolution: 0.11;
+    --milky-star-render-dpr: 0.75;
+  }
+}

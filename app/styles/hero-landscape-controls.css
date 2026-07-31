@@ -1,0 +1,141 @@
+/* Mist, character, horizon, and landscape parallax controls. */
+.hero-frame {
+  --mist-far-opacity: 1;
+  --mist-far-left: 50%;
+  --mist-far-top: 79%;
+  --mist-far-width: 30%;
+  --mist-far-height: 3%;
+  --mist-far-blur: 3px;
+  --mist-far-spread: 2;
+  --mist-far-drift-x: 20%;
+  --mist-far-drift-y: -1.5%;
+  --mist-far-woft: 50.4%;
+  --mist-far-duration: 42s;
+
+  --mist-close-opacity: 0.44;
+  --mist-close-left: 40%;
+  --mist-close-top: 80%;
+  --mist-close-width: 40%;
+  --mist-close-height: 4%;
+  --mist-close-blur: 8px;
+  --mist-close-spread: 1.2;
+  --mist-close-drift-x: -4%;
+  --mist-close-drift-y: 1.2%;
+  --mist-close-woft: 30%;
+  --mist-close-duration: 24s;
+
+  /* Rive skeleton controls */
+  --skeleton-rive-x: 70%;
+  --skeleton-rive-y: 94%;
+  --skeleton-rive-width: 30%;
+  --skeleton-rive-height: 42%;
+  --skeleton-rive-scale: .7;
+  --skeleton-rive-opacity: 0.75;
+  --skeleton-rive-contrast: 1;
+  --skeleton-rive-brightness: 1;
+  /* Public Rive rotation controls are degrees; the file converts them internally. */
+  --skeleton-arm-rest: -155.779;
+  --skeleton-forearm-rest: -24;
+  --skeleton-forearm-point: 0;
+  --skeleton-arm-angle-offset: 90.22;
+  --skeleton-arm-anchor-x: 46.7;
+  --skeleton-arm-anchor-y: 34;
+  --skeleton-eye-anchor-x: 51;
+  --skeleton-eye-anchor-y: 27.35;
+  --skeleton-eye-left-x: -72.15;
+  --skeleton-eye-left-y: 79.75;
+  --skeleton-eye-right-x: 73.65;
+  --skeleton-eye-right-y: 83.1;
+  --skeleton-eye-radius: 9;
+  --skeleton-arm-follow: 0.12;
+  --skeleton-eye-follow: 0.18;
+  --skeleton-idle-sway: 0.03;
+  --skeleton-return-delay: 700;
+  --skeleton-interest-radius: 150;
+  --skeleton-interest-release-delay: 420;
+  --skeleton-glance-interval: 4200;
+  --skeleton-glance-duration: 520;
+  --skeleton-breath-duration: 5.8s;
+  --skeleton-breath-lift: -0.35%;
+  --skeleton-breath-scale-y: 1.004;
+
+
+  --horizon-glow-opacity: 1;
+  --horizon-glow-brightness: 1.22;
+  --horizon-glow-saturation: 1.68;
+  --horizon-glow-x: 0%;
+  --horizon-glow-y: -4%;
+  --horizon-glow-scale: 1.3;
+  --horizon-glow-left: 50%;
+  --horizon-glow-top: 78%;
+  --horizon-glow-width: 112%;
+  --horizon-glow-height: 60%;
+  --horizon-glow-origin-x: 50%;
+  --horizon-glow-origin-y: 68%;
+  --horizon-glow-core-opacity: 0.78;
+  --horizon-glow-core-size: 12%;
+  --horizon-glow-blue-opacity: 0.68;
+  --horizon-glow-line-opacity: 0.52;
+  --horizon-glow-line-y: 58%;
+  --horizon-glow-line-thickness: 8%;
+  --horizon-glow-softness: 14px;
+  --horizon-glow-twinkle-duration: 8s;
+  --horizon-glow-twinkle-min: 0.78;
+  --horizon-glow-twinkle-max: 1.08;
+
+  --left-mountain-far-start-x: 0%;
+  --left-mountain-far-start-y: 0%;
+  --left-mountain-far-start-scale: 1;
+  --left-mountain-far-end-x: 0%;
+  --left-mountain-far-end-y: 0%;
+  --left-mountain-far-end-scale: 1;
+
+  --right-mountain-far-start-x: 0%;
+  --right-mountain-far-start-y: 0%;
+  --right-mountain-far-start-scale: 1;
+  --right-mountain-far-end-x: 0%;
+  --right-mountain-far-end-y: 0%;
+  --right-mountain-far-end-scale: 1;
+
+  --left-mountain-close-start-x: 0%;
+  --left-mountain-close-start-y: 0%;
+  --left-mountain-close-start-scale: 1;
+  --left-mountain-close-end-x: 0%;
+  --left-mountain-close-end-y: 0%;
+  --left-mountain-close-end-scale: 1.02;
+
+  --right-mountain-close-start-x: 0%;
+  --right-mountain-close-start-y: 0%;
+  --right-mountain-close-start-scale: 1;
+  --right-mountain-close-end-x: 0%;
+  --right-mountain-close-end-y: 0%;
+  --right-mountain-close-end-scale: 1.02;
+
+  --lake-expanded-start-x: 0%;
+  --lake-expanded-start-y: 0%;
+  --lake-expanded-start-scale: 1;
+  --lake-expanded-end-x: 0%;
+  --lake-expanded-end-y: 0%;
+  --lake-expanded-end-scale: 1;
+
+  --right-bank-start-x: 0%;
+  --right-bank-start-y: 0%;
+  --right-bank-start-scale: 1;
+  --right-bank-end-x: 2%;
+  --right-bank-end-y: 0.5%;
+  --right-bank-end-scale: 1.08;
+
+  --left-bank-start-x: 0%;
+  --left-bank-start-y: 0%;
+  --left-bank-start-scale: 1;
+  --left-bank-end-x: -3%;
+  --left-bank-end-y: 0.1%;
+  --left-bank-end-scale: 1.08;
+
+  --foreground-start-x: 0%;
+  --foreground-start-y: 0%;
+  --foreground-start-scale: 1;
+  --foreground-end-x: 0%;
+  --foreground-end-y: 2%;
+  --foreground-end-scale: 1.24;
+}

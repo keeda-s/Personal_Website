@@ -15,7 +15,7 @@ const socialLinks = [
   },
   {
     name: 'Instagram',
-    icon: <Instagram size={23} />,
+    icon: <Instagram size={18} />,
     url: 'https://instagram.com/keedafish',
   },
 ];
@@ -23,7 +23,7 @@ const socialLinks = [
 export const SocialLinks = () => {
   return (
     <motion.div 
-      className="flex items-center gap-4"
+      className="flex items-center gap-3"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1, duration: 0.5 }}
@@ -34,7 +34,7 @@ export const SocialLinks = () => {
           href={link.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="p-3 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm hover:bg-white/20 hover:scale-110 transition-all duration-300 text-white/80 hover:text-white"
+          className="grid size-6 place-items-center text-[rgba(205,222,255,0.74)] transition-all duration-300 hover:scale-110 hover:text-[rgba(244,249,255,0.92)] hover:[filter:drop-shadow(0_0_10px_rgba(190,220,255,0.36))] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(244,249,255,0.55)]"
           aria-label={`Link to my ${link.name} profile`}
         >
           {link.icon}

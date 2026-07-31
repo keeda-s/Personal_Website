@@ -1,0 +1,54 @@
+/* Moon placement, rendering, and coast-panel controls. */
+.hero-frame {
+  --moon-x: 92%;
+  --moon-y: 13%;
+  --moon-size: 46px;
+  --moon-opacity: 0.8;
+  --moon-rotation: -18deg;
+  --moon-earthshine: 0.2;
+  --moon-outline: 0.1;
+  --moon-crescent-alpha: 0.92;
+  --moon-glow: 9px;
+  --moon-maria-opacity: 0.58;
+  --moon-maria-scale: 1;
+  --moon-maria-x: 0;
+  --moon-maria-y: 0;
+  --moon-maria-rotation: -8;
+  --moon-bento-width: 330px;
+  --moon-bento-x: -14px;
+  --moon-bento-y: 12px;
+}
+
+.hero-moon-layer {
+  /*
+   * Moon hover/click panel controls.
+   * These live outside the background stack so the moon can receive pointer events.
+   */
+  --moon-x: 92%;
+  --moon-y: 13%;
+  --moon-size: 46px;
+  --moon-opacity: 0.8;
+  --moon-rotation: -18deg;
+  --moon-earthshine: 0.2;
+  --moon-outline: 0.1;
+  --moon-crescent-alpha: 0.92;
+  --moon-glow: 9px;
+  /* Lunar maria controls; x/y are fractions of the moon radius. */
+  --moon-maria-opacity: 0.58;
+  --moon-maria-scale: 1;
+  --moon-maria-x: 0;
+  --moon-maria-y: 0;
+  --moon-maria-rotation: -8;
+  --moon-hover-glow: 18px;
+  --moon-hover-ring: 32px;
+  --moon-bento-width: 330px;
+  --moon-bento-x: -14px;
+  --moon-bento-y: 12px;
+
+  z-index: 55;
+  top: 20px;
+  right: 20px;
+  bottom: 20px;
+  left: 20px;
+  pointer-events: none;
+}

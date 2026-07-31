@@ -54,6 +54,7 @@ export const Constellation = ({ onStarClick, isUIActive, activeProject, persiste
         return (
           <motion.button
             key={project.name}
+            data-skeleton-interest={project.name}
             onClick={() => onStarClick(project)}
             onMouseEnter={() => setHoveredStar(project.name)}
             onMouseLeave={() => setHoveredStar(null)}

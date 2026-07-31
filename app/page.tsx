@@ -1,45 +1,36 @@
 "use client"
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from "framer-motion"
 import { X } from "lucide-react"
 import { MusicPlayer } from "@/components/music-player"
 import { ManifestoModal } from "@/components/manifesto-modal"
 import { useState } from "react"
-// Button is no longer needed
-// import { Button } from "@/components/ui/button"
 import { StarryBackground } from "@/components/starry-background"
-// ContactForm is no longer needed
-// import { ContactForm } from "@/components/contact-form"
 import { Constellation } from "@/components/constellation"
-// Mail icon is no longer needed
-// import { Mail } from "lucide-react"
-import { BentoGridModal, Project } from "@/components/bento-grid-modal"
-// Import the new SocialLinks component
+import { BentoGridModal, type Project } from "@/components/bento-grid-modal"
 import { SocialLinks } from "@/components/social-links"
 
 export default function Home() {
-  // State for ContactForm is removed
-  // const [showContactForm, setShowContactForm] = useState(false)
   const [showManifesto, setShowManifesto] = useState(false)
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [persistedCardName, setPersistedCardName] = useState<string | null>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const [persistedCardName, setPersistedCardName] = useState<string | null>(null)
 
   const handleStarClick = (project: Project) => {
-    setSelectedProject(project);
-  };
+    setSelectedProject(project)
+  }
 
   const handleCloseModal = () => {
     if (selectedProject) {
-      setPersistedCardName(selectedProject.name);
-      setSelectedProject(null);
+      setPersistedCardName(selectedProject.name)
+      setSelectedProject(null)
     }
-  };
+  }
 
-  const isUIActive = !!selectedProject || showManifesto;
+  const isUIActive = !!selectedProject || showManifesto
 
   return (
     <main className="relative h-screen overflow-hidden">
-      <StarryBackground />
+      <StarryBackground eventsPaused={isUIActive} />
 
       <div className="relative z-10 h-full flex flex-col">
   
@@ -76,6 +67,7 @@ export default function Home() {
           </div>
           
           <motion.button 
+            data-skeleton-interest="manifesto"
             onClick={() => setShowManifesto(!showManifesto)}
             aria-label={showManifesto ? "Close manifesto" : "Open manifesto"}
             aria-expanded={showManifesto}
@@ -120,13 +112,11 @@ export default function Home() {
           />
         </section>
 
-        {/* The Get in Touch button is replaced with the new SocialLinks component */}
-        <div className={`flex justify-center pb-8 transition-opacity duration-500 ${showManifesto ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+        <div className={`fixed bottom-8 left-[clamp(1.5rem,8vw,5rem)] z-50 transition-opacity duration-500 ${showManifesto ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
           <SocialLinks />
         </div>
       </div>
 
-      {/* The ContactForm is removed from here */}
       <MusicPlayer />
 
       <AnimatePresence

@@ -1,0 +1,40 @@
+/* Shared hero frame geometry and legacy layer movement controls. */
+.hero-frame {
+  /*
+   * Manual layer animation controls.
+   *
+   * x: negative moves left, positive moves right
+   * y: negative moves up, positive moves down
+   * scale: 1 is original size, 1.1 is 10% larger
+   *
+   * Start values are the exact source PNG alignment: x 0, y 0, scale 1.
+   * Leave those at 0/0/1 when you want the layers to begin exactly as exported.
+   * End values are the expanded frame.
+   * The animation loops start -> end -> start, so changes are easy to see live.
+   * Keep foreground/bank/lake scales high enough to avoid exposed edges.
+   */
+  --hero-layer-duration: 13s;
+  --hero-layer-ease: ease-in-out;
+
+  --sky-start-x: 0%;
+  --sky-start-y: 0%;
+  --sky-start-scale: 1;
+  --sky-end-x: 0%;
+  --sky-end-y: 0%;
+  --sky-end-scale: 1.02;
+
+  --milky-way-start-x: 0%;
+  --milky-way-start-y: 0%;
+  --milky-way-start-scale: 1;
+  --milky-way-end-x: 1.4%;
+  --milky-way-end-y: 12%;
+  --milky-way-end-scale: 1;
+  z-index: 0;
+  top: 20px;
+  right: 20px;
+  bottom: 20px;
+  left: 20px;
+  border-radius: 32px;
+  background: #020712;
+  pointer-events: none;
+}

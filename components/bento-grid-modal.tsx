@@ -27,7 +27,7 @@ export const BentoGridModal = ({ project, onClose }: BentoGridModalProps) => {
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center"
+      className="fixed inset-0 z-[70] flex items-center justify-center"
     >
       <motion.div
         onClick={(e) => e.stopPropagation()}
