@@ -246,3 +246,49 @@
 .animate-fade-in {
   animation: fadeIn 1s ease-out forwards;
 }
+
+/* ==========================================================================
+   /villa subtree — additive only.
+   Light, warm palette scoped to `.villa-scope` so the repo's dark
+   `prefers-color-scheme` / `.dark` rules cannot flip the demo phone frames.
+   No existing rule above is modified.
+   ========================================================================== */
+.villa-scope {
+  --v-bg: #faf7f0;
+  --v-surface: #ffffff;
+  --v-surface-2: #f3eee3;
+  --v-ink: #1b2721;
+  --v-ink-soft: #4b5b53;
+  --v-green: #16543c;
+  --v-green-soft: #e4efe8;
+  --v-line: #e6dfd1;
+  --v-amber: #7d5310;
+  --v-amber-soft: #fbf1dc;
+  --v-wa: #25d366; /* WhatsApp green — reserved for WhatsApp elements only */
+  --v-wa-ink: #075e54;
+  background-color: var(--v-bg);
+  color: var(--v-ink);
+}
+
+/* Scroll reveal: content is visible by default. The hidden state is applied
+   only when the `villa-js` class is present on <html>, which is set by a tiny
+   inline script in app/villa/layout.tsx. With JavaScript disabled the class is
+   never added, so every section renders visible. */
+[data-reveal] {
+  transition: opacity 700ms ease-out, transform 700ms ease-out;
+  will-change: opacity, transform;
+}
+html.villa-js [data-reveal="pending"] {
+  opacity: 0;
+  transform: translateY(18px);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    transition: none;
+    will-change: auto;
+  }
+  html.villa-js [data-reveal="pending"] {
+    opacity: 1;
+    transform: none;
+  }
+}
