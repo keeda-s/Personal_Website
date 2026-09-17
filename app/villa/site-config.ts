@@ -35,7 +35,7 @@ export const siteConfig = {
   pricing: {
     monthly: { min: 99, max: 149, unit: "per property / month" },
     onboarding: { min: 99, max: 199, unit: "one-off" },
-    pmWhiteLabel: { min: 10, max: 25, unit: "per property / month" },
+    pmWhiteLabel: { min: 10, max: 25, unit: "property/month" },
     badge: "Pilot pricing — WA South West first.",
     cardHeading: "Flat $99–149/property/month — priced per property, not per message.",
   },
