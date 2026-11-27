@@ -9,7 +9,7 @@
 - `sky/`: stars, Milky Way, flow fields, and the monthly constellation.
 - `events/`: dynamic facts, dark-universe object, satellite, and launch events.
 - `moon/`: lunar model, coast-data cards, moon rendering, and panel orchestration.
-- `character/`: the Rive skeleton and its interaction state.
+- `character/`: reserved for the new character (the Rive version was removed).
 - `landscape-layers.tsx`: PNG layer order, mist placement, and foreground composition.
 - `canvas-utils.ts`: deterministic canvas and CSS-control helpers shared by renderers.
 

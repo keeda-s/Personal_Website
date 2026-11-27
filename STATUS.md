@@ -1,5 +1,5 @@
-# STATUS — keeda-s.github.io
+# STATUS — keeda-s personal website
 
-- **Now**: `villa-shell` branch adds the Villa Concierge shell site at `/villa` (7-section landing + badged 3-step onboarding demo, synthetic fixtures, conditional static export behind `NEXT_EXPORT`) — PR open, awaiting Keeda's review.
-- **Next**: Keeda replaces the placeholder contact email in `app/villa/site-config.ts`, enables GitHub Pages (Settings → Pages → Source: GitHub Actions) and merges the PR to serve `/villa/`.
-- **Blocked**: nothing in this slice; real WhatsApp connection and live owner loop remain gated by WhatsApp Business verification / Meta App Review (tracked in villa-concierge CRITICAL_PATH #1/#2/#7).
+- **Now**: `claude/project-thread-nf2q2l` trims the home page so the projects come first: Looksy and Rig2Rescue as clickable stars, real stats only, a "My work" panel (projects, About, contact), the moon and surf panel moved to the unlisted `/tides` page, and the Rive character removed. PR open, awaiting Keeda's review.
+- **Next**: set `SUPABASE_SERVICE_ROLE_KEY` and `NEXT_PUBLIC_SUPABASE_URL` (Looksy stats) and `RIG2RESCUE_REPO` plus optional `GITHUB_TOKEN` (Rig2Rescue progress) in Vercel; until then those stat tiles stay hidden. Then step 3: the new character intro.
+- **Also open**: `villa-shell` (Villa Concierge at `/villa`) still needs the contact email and GitHub Pages enabled. Note the Pages static export drops API routes, so live data only works on Vercel.

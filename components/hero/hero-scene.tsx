@@ -12,6 +12,8 @@ import { VolumetricMilkyWay } from "./sky/volumetric-milky-way"
 
 type HeroSceneProps = {
   eventsPaused?: boolean
+  /** Show the private moon and coast panel (used on the hidden /tides page). */
+  coastPanel?: boolean
 }
 
 function AmbientSkyDetails() {
@@ -30,7 +32,7 @@ function AmbientSkyDetails() {
   )
 }
 
-export function HeroScene({ eventsPaused = false }: HeroSceneProps) {
+export function HeroScene({ eventsPaused = false, coastPanel = false }: HeroSceneProps) {
   return (
     <>
       <div className="hero-frame fixed overflow-hidden">
@@ -49,7 +51,7 @@ export function HeroScene({ eventsPaused = false }: HeroSceneProps) {
       </div>
 
       <div className="hero-moon-layer fixed overflow-visible">
-        <MoonSystem />
+        <MoonSystem coastPanel={coastPanel} />
       </div>
 
       <div className="hero-border-frame fixed inset-0 pointer-events-none" aria-hidden="true" />

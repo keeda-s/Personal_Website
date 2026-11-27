@@ -1,90 +1,119 @@
-"use client";
+"use client"
 
-import React from 'react';
-import { motion, type Transition } from 'framer-motion';
-import { X } from 'lucide-react';
-import { LooksyStats } from './looksy-stats'; 
-
-export interface Project {
-  name: string;
-  description: string;
-  position?: string;
-  starDelay?: number;
-  textDelay?: number;
-  longDescription: string;
-  image: string;
-  technologies: string[];
-}
+import { useEffect } from "react"
+import { motion, type Transition } from "framer-motion"
+import { ArrowUpRight, X } from "lucide-react"
+import type { Project } from "@/lib/projects"
+import { ProjectStats } from "./project-stats"
+import { ProjectEmblem } from "./project-emblem"
+import { StatusChip } from "./status-chip"
 
 interface BentoGridModalProps {
-  project: Project;
-  onClose: () => void;
+  project: Project
+  onClose: () => void
 }
 
 export const BentoGridModal = ({ project, onClose }: BentoGridModalProps) => {
-  const transition: Transition = { type: "tween", ease: "easeInOut", duration: 0.5 };
+  const transition: Transition = { type: "tween", ease: "easeInOut", duration: 0.5 }
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => event.key === "Escape" && onClose()
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [onClose])
 
   return (
-    <div
-      onClick={onClose}
-      className="fixed inset-0 z-[70] flex items-center justify-center"
-    >
+    <div onClick={onClose} className="fixed inset-0 z-[70] flex items-center justify-center p-5 sm:p-6">
       <motion.div
-        onClick={(e) => e.stopPropagation()}
-        layoutId={`card-${project.name}`}
+        onClick={(event) => event.stopPropagation()}
+        layoutId={`card-${project.slug}`}
         transition={transition}
-        className="relative w-[90%] max-w-7xl h-[85vh] bg-blue-950/25 backdrop-blur-xl border border-blue-400/20 rounded-3xl shadow-2xl overflow-hidden"
+        role="dialog"
+        aria-modal="true"
+        aria-label={project.name}
+        className="relative max-h-[85dvh] w-full max-w-6xl overflow-y-auto rounded-3xl border border-blue-400/20 bg-blue-950/30 shadow-2xl backdrop-blur-xl"
       >
         <motion.button
           onClick={onClose}
-          className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors z-10"
+          aria-label="Close"
+          className="absolute right-4 top-4 z-10 text-white/70 transition-colors hover:text-white sm:right-6 sm:top-6"
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1, transition: { delay: 0.5 } }}
         >
           <X size={24} />
         </motion.button>
-        
-        {project.name === 'Looksy' ? (
-          <div className="grid grid-cols-3 grid-rows-3 gap-6 h-full text-white p-8 pt-16">
-            {/* Top-left: Title, Description, and Logo - UPDATED LAYOUT */}
-            <div className="col-span-2 row-span-1 flex justify-between items-center rounded-2xl bg-white/5 p-6 overflow-hidden">
-              <div className="pr-6">
-                <motion.h2 layoutId={`title-${project.name}`} transition={transition} className="text-4xl font-bold font-serif">{project.name}</motion.h2>
-                <motion.p layoutId={`description-${project.name}`} transition={transition} className="mt-2 text-white/80">{project.description}</motion.p>
-              </div>
-              {/* FIX: The logo container is now a relative frame. */}
-              {/* You can adjust the `w-40` class to control the frame's size. */}
-              <div className="relative h-full w-40 flex-shrink-0 -mr-6">
-                {/* FIX: The image is now absolutely positioned and scaled. */}
-                {/* You can adjust the `scale-150` class (e.g., scale-125, scale-200) to control the logo's zoom. */}
-                <img src="/project-media/looksy.jpg" alt="Looksy Logo" className="absolute inset-0 h-full w-full object-cover scale-124" />
-              </div>
-            </div>
-            
-            <LooksyStats />
+
+        <motion.div
+          className="grid grid-cols-1 gap-4 p-4 pt-14 text-white sm:grid-cols-3 sm:gap-6 sm:p-8 sm:pt-16"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { delay: 0.25, duration: 0.3 } }}
+        >
+          {/* Header */}
+          <div className="flex flex-col justify-center rounded-2xl bg-white/5 p-6 sm:col-span-2">
+            <StatusChip status={project.status} />
+            <motion.h2
+              layoutId={`title-${project.slug}`}
+              transition={transition}
+              className="mt-3 font-serif text-3xl font-bold sm:text-4xl"
+            >
+              {project.name}
+            </motion.h2>
+            <motion.p layoutId={`description-${project.slug}`} transition={transition} className="mt-2 text-white/80">
+              {project.tagline}
+            </motion.p>
           </div>
-        ) : (
-          <div className="grid grid-cols-3 grid-rows-2 gap-6 h-full text-white p-8 pt-16">
-            <div className="col-span-2 row-span-1 flex flex-col justify-center rounded-2xl bg-white/5 p-6">
-              <motion.h2 layoutId={`title-${project.name}`} transition={transition} className="text-4xl font-bold font-serif">{project.name}</motion.h2>
-              <motion.p layoutId={`description-${project.name}`} transition={transition} className="mt-2 text-white/80">{project.description}</motion.p>
-            </div>
-            <div className="col-span-1 row-span-2 rounded-2xl bg-white/5 overflow-hidden">
-              <img src={project.image} alt={project.name} className="w-full h-full object-cover" />
-            </div>
-            <div className="col-span-2 row-span-1 rounded-2xl bg-white/5 p-6 overflow-y-auto">
-              <p className="text-white/90">{project.longDescription}</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {project.technologies.map((tech) => (
-                  <span key={tech} className="bg-white/10 text-white/80 text-xs px-2 py-1 rounded-full">
-                    {tech}
-                  </span>
-                ))}
-              </div>
+
+          {/* Image or emblem */}
+          <div className="relative hidden aspect-square overflow-hidden rounded-2xl bg-white/5 sm:block sm:aspect-auto sm:min-h-48">
+            {project.image ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={project.image} alt={`${project.name} logo`} className="absolute inset-0 h-full w-full object-cover" />
+            ) : (
+              <ProjectEmblem className="absolute inset-0 h-full w-full p-6" />
+            )}
+          </div>
+
+          {/* Live stats (renders nothing until real numbers arrive) */}
+          {project.stats ? <ProjectStats source={project.stats} /> : null}
+
+          {/* About */}
+          <div className="rounded-2xl bg-white/5 p-6 sm:col-span-2">
+            <h3 className="mb-2 font-semibold">What it is</h3>
+            <p className="leading-relaxed text-white/85">{project.about}</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {project.technologies.map((tech) => (
+                <span key={tech} className="rounded-full bg-white/10 px-2.5 py-1 text-xs text-white/80">
+                  {tech}
+                </span>
+              ))}
             </div>
           </div>
-        )}
+
+          {/* Links */}
+          <div className="flex flex-col justify-center gap-3 rounded-2xl bg-white/5 p-6">
+            {project.links.length > 0 ? (
+              project.links.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between rounded-xl border border-white/20 px-4 py-3 text-sm transition-colors hover:bg-white/10"
+                >
+                  {link.label}
+                  <ArrowUpRight size={16} />
+                </a>
+              ))
+            ) : (
+              <p className="text-sm text-white/70">
+                {project.status === "In development"
+                  ? "Being built now. A public demo is on the way."
+                  : "Links coming soon."}
+              </p>
+            )}
+          </div>
+        </motion.div>
       </motion.div>
     </div>
-  );
-};
+  )
+}

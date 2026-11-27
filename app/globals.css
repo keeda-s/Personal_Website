@@ -247,6 +247,29 @@
   animation: fadeIn 1s ease-out forwards;
 }
 
+/* Project stars: a slow ring pulse so they read as interactive */
+@keyframes project-star-pulse {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.45);
+  }
+  70%, 100% {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+
+.project-star-ring {
+  animation: project-star-pulse 3.2s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-star-ring {
+    animation: none;
+    opacity: 0.35;
+  }
+}
+
 /* ==========================================================================
    /villa subtree — additive only.
    Light, warm palette scoped to `.villa-scope` so the repo's dark

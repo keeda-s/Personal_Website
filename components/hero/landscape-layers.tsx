@@ -1,5 +1,4 @@
 import Image from "next/image"
-import { SkeletonRiveCharacter } from "./character/skeleton-rive-character"
 
 const imageClass = "absolute inset-0 h-full w-full object-cover select-none"
 
@@ -37,8 +36,6 @@ export function LandscapeLayers() {
       <LandscapeImage src="/hero-layers/Lake expanded.png" layerClassName="hero-lake-expanded" />
       <LandscapeImage src="/hero-layers/Righthand Bank w human.png" layerClassName="hero-right-bank" />
       <LandscapeImage src="/hero-layers/lefthand bank.png" layerClassName="hero-left-bank" />
-
-      <SkeletonRiveCharacter />
 
       <LandscapeImage src="/hero-layers/foreground.png" layerClassName="hero-foreground" />
     </div>
