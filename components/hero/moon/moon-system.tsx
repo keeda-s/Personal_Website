@@ -14,10 +14,15 @@ import {
   MoonCoastData,
 } from "./moon-data"
 
-export function MoonSystem() {
+type MoonSystemProps = {
+  /** Show the private moon, tide, swell and wind panel. Off on the public home page. */
+  coastPanel?: boolean
+}
+
+export function MoonSystem({ coastPanel = false }: MoonSystemProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [coastData, setCoastData] = useState<MoonCoastData | null>(null)
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(coastPanel)
   const [isForecastOpen, setIsForecastOpen] = useState(false)
   const [hoveredMoonPhase, setHoveredMoonPhase] = useState<string | null>(null)
   const [viewportHeight, setViewportHeight] = useState<number | null>(null)
@@ -347,17 +352,18 @@ export function MoonSystem() {
       <div
         className="hero-moon-trigger"
         data-skeleton-interest="moon"
-        aria-label="Show Yallingup moon and coast conditions"
+        aria-label={coastPanel ? "Show Yallingup moon and coast conditions" : "The moon, in its current phase"}
         onMouseEnter={() => {
+          if (!coastPanel) return
           clearCloseTimer()
           setHoveredMoonPhase(null)
           setIsOpen(true)
         }}
-        onMouseLeave={scheduleClose}
+        onMouseLeave={() => coastPanel && scheduleClose()}
       >
         <canvas ref={canvasRef} className="hero-moon" />
       </div>
-      {isOpen ? (
+      {coastPanel && isOpen ? (
         <div
           className={`hero-moon-bento${isForecastOpen ? " is-forecast-open" : ""}`}
           onMouseEnter={clearCloseTimer}

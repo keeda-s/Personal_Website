@@ -1,29 +1,40 @@
-import { createClient } from '@supabase/supabase-js';
-import { NextResponse } from 'next/server';
+import { createClient } from "@supabase/supabase-js"
+import { NextResponse } from "next/server"
+
+// Live Looksy usage, read from the Looksy Supabase project.
+// Needs NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY (server-only;
+// the tables use row level security, so the anon key reads nothing).
+export const revalidate = 3600
 
 export async function GET() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY
 
-  if (!supabaseUrl || !supabaseKey) {
-    return NextResponse.json(
-      { error: 'Supabase stats are not configured yet.' },
-      { status: 501 }
-    );
+  if (!url || !key) {
+    return NextResponse.json({ error: "Looksy stats are not configured." }, { status: 501 })
   }
 
-  const supabase = createClient(supabaseUrl, supabaseKey);
+  const supabase = createClient(url, key, { auth: { persistSession: false } })
 
   try {
-    const { data, error } = await supabase.functions.invoke('get-looksy-stats');
+    const { data, error } = await supabase
+      .from("user_searches")
+      .select("meta_user_id, products_detected")
+      .range(0, 49999)
 
-    if (error) {
-      throw error;
-    }
+    if (error) throw error
 
-    return NextResponse.json(data);
+    const rows = data ?? []
+    const people = new Set(rows.map((row) => row.meta_user_id).filter(Boolean)).size
+    const productsSpotted = rows.reduce((sum, row) => sum + (row.products_detected ?? 0), 0)
+
+    return NextResponse.json({
+      searches: rows.length,
+      people,
+      productsSpotted,
+    })
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unable to fetch Looksy stats.';
-    return NextResponse.json({ error: message }, { status: 500 });
+    const message = error instanceof Error ? error.message : "Unable to fetch Looksy stats."
+    return NextResponse.json({ error: message }, { status: 500 })
   }
 }

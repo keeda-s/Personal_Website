@@ -1,133 +1,107 @@
 "use client"
 
-import { AnimatePresence, motion } from "framer-motion"
-import { X } from "lucide-react"
-import { MusicPlayer } from "@/components/music-player"
-import { ManifestoModal } from "@/components/manifesto-modal"
 import { useState } from "react"
+import { AnimatePresence, motion } from "framer-motion"
+import { MusicPlayer } from "@/components/music-player"
 import { StarryBackground } from "@/components/starry-background"
 import { Constellation } from "@/components/constellation"
-import { BentoGridModal, type Project } from "@/components/bento-grid-modal"
+import { BentoGridModal } from "@/components/bento-grid-modal"
 import { SocialLinks } from "@/components/social-links"
+import { WorkPanel } from "@/components/work-panel"
+import type { Project } from "@/lib/projects"
 
 export default function Home() {
-  const [showManifesto, setShowManifesto] = useState(false)
+  const [showWork, setShowWork] = useState(false)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [persistedCardName, setPersistedCardName] = useState<string | null>(null)
 
-  const handleStarClick = (project: Project) => {
-    setSelectedProject(project)
-  }
-
   const handleCloseModal = () => {
     if (selectedProject) {
-      setPersistedCardName(selectedProject.name)
+      setPersistedCardName(selectedProject.slug)
       setSelectedProject(null)
     }
   }
 
-  const isUIActive = !!selectedProject || showManifesto
+  const isUIActive = !!selectedProject || showWork
 
   return (
-    <main className="relative h-screen overflow-hidden">
+    <main className="relative h-dvh overflow-hidden">
       <StarryBackground eventsPaused={isUIActive} />
 
-      <div className="relative z-10 h-full flex flex-col">
-  
-        <header 
-          className="relative z-50 px-8 text-center transition-all duration-500" 
-          style={{ paddingTop: showManifesto ? '8vh' : '28vh' }}
-        >
-          <div className="flex flex-col items-center relative">
-            <p 
-              className="text-xs font-semibold tracking-widest text-white/80 absolute"
-              style={{ 
-                fontFamily: 'var(--font-open-sans)',
-                left: '40.8%',
-                transform: 'translateX(-50%)',
-                top: '0px'
-              }}
+      <div className="relative z-10 flex h-full flex-col">
+        <header className="fixed left-[clamp(2.25rem,6vw,4.5rem)] top-[clamp(2rem,4.5vh,2.75rem)] z-50">
+          <motion.a
+            href="/"
+            aria-label="Keeda's idea-isms, home"
+            className="block leading-none"
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          >
+            <span
+              className="block pl-[0.15rem] text-[0.6rem] font-semibold tracking-[0.3em] text-white/70"
+              style={{ fontFamily: "var(--font-open-sans)" }}
             >
               KEEDA&apos;S
-            </p>
-            <h1 
-              className="text-9xl tracking-wider" 
-              style={{ 
+            </span>
+            <h1
+              className="whitespace-nowrap text-[clamp(1.9rem,4vw,2.6rem)] leading-none tracking-wide"
+              style={{
                 fontFamily: "'Dream Avenue', serif",
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.9) 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                textShadow: '0 0 40px rgba(255, 255, 255, 0.3)',
-                filter: 'drop-shadow(0 0 20px rgba(255, 255, 255, 0.2))'
+                background:
+                  "linear-gradient(135deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.62) 50%, rgba(255,255,255,0.92) 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                filter: "drop-shadow(0 0 14px rgba(255, 255, 255, 0.18))",
               }}
             >
               idea-isms
             </h1>
-          </div>
-          
-          <motion.button 
-            data-skeleton-interest="manifesto"
-            onClick={() => setShowManifesto(!showManifesto)}
-            aria-label={showManifesto ? "Close manifesto" : "Open manifesto"}
-            aria-expanded={showManifesto}
-            layout
-            transition={{ type: "spring", stiffness: 260, damping: 24 }}
-            className={`relative mt-8 inline-flex h-10 items-center justify-center overflow-hidden rounded-full border text-sm text-gray-200 transition-colors duration-300 ${
-              showManifesto
-                ? "w-34 border-white/45 bg-white/15 shadow-[0_0_24px_rgba(255,255,255,0.18)]"
-                : "w-28 border-white/30 hover:bg-white/10"
-            }`}
-          >
-            <motion.span
-              animate={{ x: showManifesto ? -10 : 0 }}
-              transition={{ type: "spring", stiffness: 300, damping: 26 }}
-            >
-              Manifesto
-            </motion.span>
-            <motion.span
-              aria-hidden="true"
-              className="absolute right-3.5 flex h-5 w-5 items-center justify-center rounded-full border border-white/35 bg-white/15"
-              initial={false}
-              animate={{
-                opacity: showManifesto ? 1 : 0,
-                x: showManifesto ? 0 : -14,
-                scale: showManifesto ? 1 : 0.75,
-              }}
-              transition={{ type: "spring", stiffness: 320, damping: 24 }}
-            >
-              <X className="h-3.5 w-3.5" />
-            </motion.span>
-          </motion.button>
+          </motion.a>
         </header>
 
-        <ManifestoModal isOpen={showManifesto} />
-
-        <section className={`relative flex-1 transition-opacity duration-500 ${showManifesto ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-          <Constellation 
-            onStarClick={handleStarClick} 
+        <section className="relative flex-1">
+          <Constellation
+            onStarClick={setSelectedProject}
             isUIActive={isUIActive}
             activeProject={selectedProject}
             persistedCardName={persistedCardName}
           />
         </section>
 
-        <div className={`fixed bottom-8 left-[clamp(1.5rem,8vw,5rem)] z-50 transition-opacity duration-500 ${showManifesto ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+        <div className="fixed bottom-8 left-[clamp(1.5rem,8vw,5rem)] z-50">
           <SocialLinks />
         </div>
       </div>
 
+      <motion.button
+        onClick={() => setShowWork(true)}
+        className="fixed right-[clamp(2.25rem,6vw,4.5rem)] top-[clamp(2.25rem,5vh,3rem)] z-50 rounded-full border border-white/30 bg-white/5 px-5 py-2 text-sm text-white/90 backdrop-blur-sm transition-colors hover:bg-white/15"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
+      >
+        My work
+      </motion.button>
+
       <MusicPlayer />
 
-      <AnimatePresence
-        onExitComplete={() => setPersistedCardName(null)}
-      >
-        {selectedProject && (
-          <BentoGridModal 
-            key={selectedProject.name} 
-            project={selectedProject} 
-            onClose={handleCloseModal} 
+      <AnimatePresence>
+        {showWork && (
+          <WorkPanel
+            onClose={() => setShowWork(false)}
+            onOpenProject={(project) => {
+              setShowWork(false)
+              setSelectedProject(project)
+            }}
           />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence onExitComplete={() => setPersistedCardName(null)}>
+        {selectedProject && (
+          <BentoGridModal key={selectedProject.slug} project={selectedProject} onClose={handleCloseModal} />
         )}
       </AnimatePresence>
     </main>
