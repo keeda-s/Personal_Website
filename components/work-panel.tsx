@@ -33,7 +33,7 @@ export function WorkPanel({ onClose, onOpenProject }: WorkPanelProps) {
         aria-modal="true"
         aria-label="My work"
         onClick={(event) => event.stopPropagation()}
-        className="h-full w-full max-w-xl overflow-y-auto border-l border-white/15 bg-[rgba(10,16,48,0.72)] px-6 py-8 text-white shadow-2xl backdrop-blur-xl sm:px-10"
+        className="glass-panel h-full w-full max-w-xl overflow-y-auto border-y-0 border-r-0 bg-[rgba(10,16,48,0.35)] px-6 py-8 text-white sm:px-10"
         initial={{ x: 60, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         exit={{ x: 60, opacity: 0 }}
@@ -57,7 +57,7 @@ export function WorkPanel({ onClose, onOpenProject }: WorkPanelProps) {
               <li key={project.slug}>
                 <button
                   onClick={() => onOpenProject(project)}
-                  className="group w-full rounded-2xl border border-white/10 bg-white/5 p-5 text-left transition-colors hover:border-white/25 hover:bg-white/10"
+                  className="group w-full glass-tile rounded-2xl p-5 text-left transition-colors hover:border-white/25 hover:bg-white/10"
                 >
                   <div className="flex items-center justify-between gap-3">
                     <span className="text-lg font-semibold">{project.name}</span>

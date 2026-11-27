@@ -31,7 +31,7 @@ export const BentoGridModal = ({ project, onClose }: BentoGridModalProps) => {
         role="dialog"
         aria-modal="true"
         aria-label={project.name}
-        className="relative max-h-[85dvh] w-full max-w-6xl overflow-y-auto rounded-3xl border border-blue-400/20 bg-blue-950/30 shadow-2xl backdrop-blur-xl"
+        className="glass-panel relative max-h-[85dvh] w-full max-w-6xl overflow-y-auto rounded-3xl"
       >
         <motion.button
           onClick={onClose}
@@ -49,7 +49,7 @@ export const BentoGridModal = ({ project, onClose }: BentoGridModalProps) => {
           animate={{ opacity: 1, transition: { delay: 0.25, duration: 0.3 } }}
         >
           {/* Header */}
-          <div className="flex flex-col justify-center rounded-2xl bg-white/5 p-6 sm:col-span-2">
+          <div className="flex flex-col justify-center glass-tile rounded-2xl p-6 sm:col-span-2">
             <StatusChip status={project.status} />
             <motion.h2
               layoutId={`title-${project.slug}`}
@@ -64,7 +64,7 @@ export const BentoGridModal = ({ project, onClose }: BentoGridModalProps) => {
           </div>
 
           {/* Image or emblem */}
-          <div className="relative hidden aspect-square overflow-hidden rounded-2xl bg-white/5 sm:block sm:aspect-auto sm:min-h-48">
+          <div className="relative hidden aspect-square overflow-hidden glass-tile rounded-2xl sm:block sm:aspect-auto sm:min-h-48">
             {project.image ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={project.image} alt={`${project.name} logo`} className="absolute inset-0 h-full w-full object-cover" />
@@ -77,7 +77,7 @@ export const BentoGridModal = ({ project, onClose }: BentoGridModalProps) => {
           {project.stats ? <ProjectStats source={project.stats} /> : null}
 
           {/* About */}
-          <div className="rounded-2xl bg-white/5 p-6 sm:col-span-2">
+          <div className="glass-tile rounded-2xl p-6 sm:col-span-2">
             <h3 className="mb-2 font-semibold">What it is</h3>
             <p className="leading-relaxed text-white/85">{project.about}</p>
             <div className="mt-4 flex flex-wrap gap-2">
@@ -90,7 +90,7 @@ export const BentoGridModal = ({ project, onClose }: BentoGridModalProps) => {
           </div>
 
           {/* Links */}
-          <div className="flex flex-col justify-center gap-3 rounded-2xl bg-white/5 p-6">
+          <div className="flex flex-col justify-center gap-3 glass-tile rounded-2xl p-6">
             {project.links.length > 0 ? (
               project.links.map((link) => (
                 <a

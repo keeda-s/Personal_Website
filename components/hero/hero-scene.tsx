@@ -1,51 +1,39 @@
 "use client"
 
-import { CosmicEventLayer } from "./events/cosmic-event-layer"
-import { DarkMystery } from "./events/dark-mystery"
-import { LiveSkyEvents } from "./events/live-sky-events"
 import { LandscapeLayers } from "./landscape-layers"
 import { MoonSystem } from "./moon/moon-system"
-import { StarFlowFieldCanvas, VanGoghFlowCanvas } from "./sky/flow-field-canvases"
 import { StarFieldCanvas } from "./sky/star-field-canvas"
-import { SeasonalConstellation } from "./sky/seasonal-constellation"
 import { VolumetricMilkyWay } from "./sky/volumetric-milky-way"
 
 type HeroSceneProps = {
+  /** Kept for compatibility; the event layers that used it are currently off. */
   eventsPaused?: boolean
   /** Show the private moon and coast panel (used on the hidden /tides page). */
   coastPanel?: boolean
 }
 
+// Kept deliberately calm: stars, the Milky Way, the odd shooting star and the
+// horizon glow. The busier layers (sky-event facts, flow fields, the dark-universe
+// object, the seasonal constellation, sparkles) still live in ./events and ./sky
+// and can be added back here one at a time.
 function AmbientSkyDetails() {
   return (
     <>
       <div className="hero-shooting-star hero-shooting-star-a" />
       <div className="hero-shooting-star hero-shooting-star-b" />
-      <div className="hero-shooting-star hero-shooting-star-c" />
-      <div className="hero-geometric-anomaly" />
-      <div className="hero-star-sparkle hero-star-sparkle-a" />
-      <div className="hero-star-sparkle hero-star-sparkle-b" />
-      <div className="hero-star-sparkle hero-star-sparkle-c" />
-      <div className="hero-star-sparkle hero-star-sparkle-d" />
       <div className="hero-horizon-glow" />
     </>
   )
 }
 
-export function HeroScene({ eventsPaused = false, coastPanel = false }: HeroSceneProps) {
+export function HeroScene({ coastPanel = false }: HeroSceneProps) {
   return (
     <>
       <div className="hero-frame fixed overflow-hidden">
         <div className="hero-sky-background" />
         <StarFieldCanvas />
-        <SeasonalConstellation />
 
         <VolumetricMilkyWay />
-        <DarkMystery />
-        <VanGoghFlowCanvas />
-        <StarFlowFieldCanvas />
-        <CosmicEventLayer paused={eventsPaused} />
-        <LiveSkyEvents />
         <AmbientSkyDetails />
         <LandscapeLayers />
       </div>

@@ -8,7 +8,7 @@ import { Constellation } from "@/components/constellation"
 import { BentoGridModal } from "@/components/bento-grid-modal"
 import { SocialLinks } from "@/components/social-links"
 import { WorkPanel } from "@/components/work-panel"
-import { site, type Project } from "@/lib/projects"
+import type { Project } from "@/lib/projects"
 
 export default function Home() {
   const [showWork, setShowWork] = useState(false)
@@ -29,42 +29,36 @@ export default function Home() {
       <StarryBackground eventsPaused={isUIActive} />
 
       <div className="relative z-10 flex h-full flex-col">
-        <header className="relative z-50 px-4 pt-[16vh] text-center md:pt-[22vh]">
-          <motion.div
-            className="relative inline-block"
-            initial={{ opacity: 0, y: 12 }}
+        <header className="fixed left-[clamp(2.25rem,6vw,4.5rem)] top-[clamp(2rem,4.5vh,2.75rem)] z-50">
+          <motion.a
+            href="/"
+            aria-label="Keeda's idea-isms, home"
+            className="block leading-none"
+            initial={{ opacity: 0, y: -6 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
+            transition={{ duration: 1, ease: "easeOut" }}
           >
-            <p
-              className="absolute top-0 -translate-x-1/2 text-[clamp(0.55rem,1.6vw,0.75rem)] font-semibold tracking-widest text-white/80"
-              style={{ fontFamily: "var(--font-open-sans)", left: "28%" }}
+            <span
+              className="block pl-[0.15rem] text-[0.6rem] font-semibold tracking-[0.3em] text-white/70"
+              style={{ fontFamily: "var(--font-open-sans)" }}
             >
               KEEDA&apos;S
-            </p>
+            </span>
             <h1
-              className="whitespace-nowrap text-[clamp(3.6rem,15vw,8rem)] leading-tight tracking-wider"
+              className="whitespace-nowrap text-[clamp(1.9rem,4vw,2.6rem)] leading-none tracking-wide"
               style={{
                 fontFamily: "'Dream Avenue', serif",
                 background:
-                  "linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.9) 100%)",
+                  "linear-gradient(135deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.62) 50%, rgba(255,255,255,0.92) 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
-                filter: "drop-shadow(0 0 20px rgba(255, 255, 255, 0.2))",
+                filter: "drop-shadow(0 0 14px rgba(255, 255, 255, 0.18))",
               }}
             >
               idea-isms
             </h1>
-          </motion.div>
-          <motion.p
-            className="mt-1 text-sm text-white/85 md:text-base"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 1 }}
-          >
-            {site.name} · {site.intro}
-          </motion.p>
+          </motion.a>
         </header>
 
         <section className="relative flex-1">

@@ -82,7 +82,7 @@ export function ProjectStats({ source }: { source: NonNullable<Project["stats"]>
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:col-span-3">
       {stats.map((stat) => (
-        <div key={stat.label} className="rounded-2xl bg-white/5 p-5 text-center sm:p-6">
+        <div key={stat.label} className="glass-tile rounded-2xl p-5 text-center sm:p-6">
           <p className="text-3xl font-semibold tabular-nums sm:text-4xl">
             {typeof stat.value === "number" ? <AnimatedNumber value={stat.value} /> : stat.value}
           </p>

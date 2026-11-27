@@ -37,7 +37,7 @@ export const projects: Project[] = [
     image: "/project-media/looksy.jpg",
     technologies: ["Computer vision", "LLM agents", "Supabase", "n8n", "Instagram API"],
     links: [{ label: "Try it on Instagram", href: "https://instagram.com/trylooksy" }],
-    star: { x: 28, y: 22, mobileX: 22, mobileY: 14 },
+    star: { x: 28, y: 50, mobileX: 24, mobileY: 44 },
     stats: "looksy",
   },
   {
@@ -49,7 +49,7 @@ export const projects: Project[] = [
     status: "In development",
     technologies: ["Unity", "three.js", "Python", "Supabase"],
     links: [],
-    star: { x: 72, y: 22, mobileX: 78, mobileY: 14 },
+    star: { x: 72, y: 50, mobileX: 76, mobileY: 44 },
     stats: "github",
   },
 ]
@@ -58,7 +58,7 @@ export const projects: Project[] = [
 export const upcomingStar = {
   name: "Coming soon",
   tagline: "Something new is forming.",
-  star: { x: 50, y: 34, mobileX: 50, mobileY: 26 },
+  star: { x: 50, y: 60, mobileX: 50, mobileY: 54 },
 }
 
 export const site = {
